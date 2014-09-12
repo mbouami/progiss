@@ -1,0 +1,14 @@
+Acme\ProsalesBundle\Entity\Typesaction:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\TypesactionRepository   
+  table: prosales_typesaction
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 100  
+  lifecycleCallbacks: {  }

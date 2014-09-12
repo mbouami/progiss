@@ -1,0 +1,28 @@
+Acme\ProsalesBundle\Entity\Piecesjointes:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\PiecesjointesRepository      
+  table: prosales_piecesjointes
+  fields:
+    id:
+      type: integer
+      id: true      
+      generator:
+        strategy: AUTO
+    document:
+      type: blob
+      nullable: true
+    createdAt:
+      type: datetime
+      nullable: false
+      column: created_at
+    updatedAt:
+      type: datetime
+      nullable: false
+      column: updated_at
+  manyToOne:
+    action:
+      targetEntity: Actions
+      mapped-by : piecejointe           
+      
+  lifecycleCallbacks: {  }     
+      

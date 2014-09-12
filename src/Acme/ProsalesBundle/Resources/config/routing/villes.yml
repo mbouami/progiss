@@ -1,0 +1,30 @@
+villes:
+    path:     /
+    defaults: { _controller: "AcmeProsalesBundle:Villes:index" }
+
+villes_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Villes:show" }
+
+villes_new:
+    path:     /new
+    defaults: { _controller: "AcmeProsalesBundle:Villes:new" }
+
+villes_create:
+    path:     /create
+    defaults: { _controller: "AcmeProsalesBundle:Villes:create" }
+    requirements: { _method: post }
+
+villes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Villes:edit" }
+
+villes_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Villes:update" }
+    requirements: { _method: post|put }
+
+villes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Villes:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,28 @@
+#acme_prosales_homepage:
+#    path:     /hello/{name}
+#    defaults: { _controller: AcmeProsalesBundle:Default:index }
+
+_welcome_progiss:
+    pattern:  /
+    defaults: "{ _controller: AcmeProsalesBundle:Default:index }"
+    
+_prosales_secured:
+    resource: "@AcmeProsalesBundle/Controller/SecuredController.php"
+    type:     annotation
+
+AcmeProsalesBundle_referents:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/referents.yml"
+    prefix:   /referents
+    
+AcmeProsalesBundle_villes:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/villes.yml"
+    prefix:   /villes
+
+AcmeProsalesBundle_devis:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/devis.yml"
+    prefix:   /devis    
+    
+AcmeProsalesBundle_commandes:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/commandes.yml"
+    prefix:   /commandes
+        

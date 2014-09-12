@@ -1,0 +1,14 @@
+Acme\ProsalesBundle\Entity\Typesadresse:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\TypesadresseRepository   
+  table: prosales_typesadresse
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 100  
+  lifecycleCallbacks: {  }

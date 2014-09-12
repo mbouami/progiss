@@ -1,0 +1,62 @@
+Acme\ProsalesBundle\Entity\Actions:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\ActionsRepository      
+  table: prosales_actions
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    sujet:
+      type: string
+      length: 255
+      nullable: true        
+    a:
+      type: string
+      length: 100
+      nullable: true          
+    cc:
+      type: string
+      length: 100
+      nullable: true             
+    cci:
+      type: string
+      length: 100     
+      nullable: true         
+    pj:
+      type: boolean
+      default: false
+    description:
+      type: text
+      nullable: true
+    createdAt:
+      type: datetime
+      nullable: false
+      column: created_at
+    updatedAt:
+      type: datetime
+      nullable: false
+      column: updated_at  
+  manyToOne:       
+    typeaction:
+      targetEntity: Typesaction       
+    referent:
+      targetEntity: Referents   
+#    organisation:
+#      targetEntity: Organisations            
+    organisation:
+      targetEntity: Organisations  
+      inversedBy: action
+      joinColumn:
+        name: organisation_id
+        referencedColumnName: id  
+    contact:
+      targetEntity: Contacts  
+    piecejointe:
+      targetEntity: Piecesjointes  
+      inversedBy: action
+      joinColumn:
+        name: piecejoints_id
+        referencedColumnName: id
+  lifecycleCallbacks: {  }        

@@ -1,0 +1,19 @@
+Acme\ProsalesBundle\Entity\Villes:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\VillesRepository   
+  table: prosales_villes
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO        
+    ville:
+      type: string
+      length: 100  
+    cp:
+      type: string
+      length: 10      
+    pays:
+      type: string
+      length: 100

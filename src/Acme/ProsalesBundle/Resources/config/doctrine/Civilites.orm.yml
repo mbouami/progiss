@@ -1,0 +1,20 @@
+Acme\ProsalesBundle\Entity\Civilites:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\CivilitesRepository      
+  table: prosales_civilites
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    libellecourt:
+      type: string
+      length: 50
+      unique: true       
+    libellelong:
+      type: string
+      length: 255     
+    libellepolitesse:
+      type: string
+      length: 255         

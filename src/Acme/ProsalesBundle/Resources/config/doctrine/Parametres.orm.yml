@@ -1,0 +1,17 @@
+Acme\ProsalesBundle\Entity\Parametres:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\ParametresRepository      
+  table: prosales_parametres
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    valeur:
+      type: string
+      length: 100
+      unique: true      

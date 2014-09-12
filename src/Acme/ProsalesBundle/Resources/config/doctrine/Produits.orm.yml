@@ -1,0 +1,24 @@
+Acme\ProsalesBundle\Entity\Produits:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\ProduitsRepository      
+  table: prosales_produits
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    libelle:
+      type: string
+      length: 255
+    reference:
+      type: string
+      length: 100
+      unique: true 
+    prixht:
+      type: decimal
+      precision: 15
+      scale: 2
+      length: 20      
+    description:
+      type: text      

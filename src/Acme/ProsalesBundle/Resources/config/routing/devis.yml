@@ -1,0 +1,30 @@
+devis:
+    path:     /
+    defaults: { _controller: "AcmeProsalesBundle:Devis:index" }
+
+devis_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Devis:show" }
+
+devis_new:
+    path:     /new
+    defaults: { _controller: "AcmeProsalesBundle:Devis:new" }
+
+devis_create:
+    path:     /create
+    defaults: { _controller: "AcmeProsalesBundle:Devis:create" }
+    requirements: { _method: post }
+
+devis_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Devis:edit" }
+
+devis_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Devis:update" }
+    requirements: { _method: post|put }
+
+devis_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Devis:delete" }
+    requirements: { _method: post|delete }

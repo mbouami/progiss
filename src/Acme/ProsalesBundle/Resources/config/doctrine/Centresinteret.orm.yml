@@ -1,0 +1,19 @@
+Acme\ProsalesBundle\Entity\Centresinteret:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\CentresinteretRepository   
+  table: prosales_centresinteret
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 100  
+  manyToMany:     
+    contact:
+      targetEntity: Contacts
+      mappedBy: centresinteret
+#      cascade: [remove]        
+  lifecycleCallbacks: {  }

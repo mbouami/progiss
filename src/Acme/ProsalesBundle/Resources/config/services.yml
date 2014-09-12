@@ -1,0 +1,7 @@
+parameters:
+#    acme_prosales.example.class: Acme\ProsalesBundle\Example
+
+services:
+#    acme_prosales.example:
+#        class: %acme_prosales.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

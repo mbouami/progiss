@@ -1,0 +1,30 @@
+commandes:
+    path:     /
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:index" }
+
+commandes_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:show" }
+
+commandes_new:
+    path:     /new
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:new" }
+
+commandes_create:
+    path:     /create
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:create" }
+    requirements: { _method: post }
+
+commandes_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:edit" }
+
+commandes_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:update" }
+    requirements: { _method: post|put }
+
+commandes_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Commandes:delete" }
+    requirements: { _method: post|delete }

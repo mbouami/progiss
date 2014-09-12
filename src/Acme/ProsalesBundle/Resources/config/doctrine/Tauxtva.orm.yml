@@ -1,0 +1,15 @@
+Acme\ProsalesBundle\Entity\Tauxtva:
+  type: entity
+  repositoryClass: Acme\ProsalesBundle\Entity\Repository\TauxtvaRepository   
+  table: prosales_tauxtva
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    taux:
+      type: decimal
+      precision: 10
+      scale: 2      
+  lifecycleCallbacks: {  }
