@@ -25,7 +25,7 @@ class Lignesdevis
     private $reference;
 
     /**
-     * @var string
+     * @var float
      */
     private $prixht;
 
@@ -35,12 +35,12 @@ class Lignesdevis
     private $quantite;
 
     /**
-     * @var string
+     * @var float
      */
     private $remise;
 
     /**
-     * @var string
+     * @var float
      */
     private $totalht;
 
@@ -114,7 +114,7 @@ class Lignesdevis
     /**
      * Set prixht
      *
-     * @param string $prixht
+     * @param float $prixht
      * @return Lignesdevis
      */
     public function setPrixht($prixht)
@@ -127,7 +127,7 @@ class Lignesdevis
     /**
      * Get prixht
      *
-     * @return string 
+     * @return float 
      */
     public function getPrixht()
     {
@@ -160,7 +160,7 @@ class Lignesdevis
     /**
      * Set remise
      *
-     * @param string $remise
+     * @param float $remise
      * @return Lignesdevis
      */
     public function setRemise($remise)
@@ -173,7 +173,7 @@ class Lignesdevis
     /**
      * Get remise
      *
-     * @return string 
+     * @return float 
      */
     public function getRemise()
     {
@@ -183,7 +183,7 @@ class Lignesdevis
     /**
      * Set totalht
      *
-     * @param string $totalht
+     * @param float $totalht
      * @return Lignesdevis
      */
     public function setTotalht($totalht)
@@ -196,7 +196,7 @@ class Lignesdevis
     /**
      * Get totalht
      *
-     * @return string 
+     * @return float 
      */
     public function getTotalht()
     {
@@ -248,4 +248,26 @@ class Lignesdevis
     {
         return $this->devis;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getReference());
+    }
+    
+    public function getArrayLigneDevis(){
+        $sortie = array(
+                        'id'=>$this->id,
+                        'iddevis'=>  $this->getDevis()->getId(),
+                        'ordre'=>$this->ordre,
+                        'prixht'=>$this->prixht,
+                        'totalht'=>$this->totalht,
+                        'quantite'=>$this->quantite,
+                        'reference'=>  $this->reference,
+                        'remise'=>  $this->remise,
+                        'description'=>  $this->description,
+                        'cat'=>'produit'
+                        );      
+        return $sortie;
+    }   
+        
 }

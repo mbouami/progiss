@@ -9,8 +9,9 @@ Acme\ProsalesBundle\Entity\Piecesjointes:
       generator:
         strategy: AUTO
     document:
-      type: blob
-      nullable: true
+      type: string
+      length: 100 
+      nullable: false
     createdAt:
       type: datetime
       nullable: false
@@ -21,8 +22,11 @@ Acme\ProsalesBundle\Entity\Piecesjointes:
       column: updated_at
   manyToOne:
     action:
-      targetEntity: Actions
-      mapped-by : piecejointe           
+#      targetEntity: Actions
+#      mapped-by : piecejointe  
+      targetEntity:  Actions 
+      inversedBy: piecejointe
+      cascade: [ "persist", "remove"]
       
   lifecycleCallbacks: {  }     
       

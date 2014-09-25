@@ -3,10 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/mescss.css') }}" />
+        <link rel="stylesheet" href="{{ asset('js/dijit/themes/soria/soria.css') }}" />
+        <link rel="stylesheet" href="{{ asset('js/dojo/resources/dojo.css') }}" />
+        <link rel="stylesheet" href="{{ asset('js/gridx/resources/claro/Gridx.css') }}" />   
+        <link rel="stylesheet" href="{{ asset('js/dojox/calendar/themes/soria/Calendar.css') }}" />
+        <link rel="stylesheet" href="{{ asset('js/dojox/form/resources/CheckedMultiSelect.css') }}" />          
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script>dojoConfig = {parseOnLoad: true}</script>
+        <script src='{{ asset('js/dojo/dojo.js') }}'></script>
+{#        <script src='{{ asset('js/mesparametres.js') }}'></script>           #}
+        <script src='{{ asset('js/mesfonctions.js') }}'></script>         
+        <script>
+            require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", "dijit/layout/AccordionContainer", "dijit/layout/AccordionPane"]);        
+        </script>        
     </head>
-    <body>
+    <body class="soria">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

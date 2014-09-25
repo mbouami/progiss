@@ -1,30 +1,30 @@
 referents:
-    path:     /
+    pattern:  /
     defaults: { _controller: "AcmeProsalesBundle:Referents:index" }
 
 referents_show:
-    path:     /{id}/show
+    pattern:  /{id}/show
     defaults: { _controller: "AcmeProsalesBundle:Referents:show" }
 
 referents_new:
-    path:     /new
+    pattern:  /new
     defaults: { _controller: "AcmeProsalesBundle:Referents:new" }
 
 referents_create:
-    path:     /create
+    pattern:  /create
     defaults: { _controller: "AcmeProsalesBundle:Referents:create" }
     requirements: { _method: post }
 
 referents_edit:
-    path:     /{id}/edit
+    pattern:  /{id}/edit
     defaults: { _controller: "AcmeProsalesBundle:Referents:edit" }
 
 referents_update:
-    path:     /{id}/update
+    pattern:  /{id}/update
     defaults: { _controller: "AcmeProsalesBundle:Referents:update" }
     requirements: { _method: post|put }
 
 referents_delete:
-    path:     /{id}/delete
+    pattern:  /{id}/delete
     defaults: { _controller: "AcmeProsalesBundle:Referents:delete" }
     requirements: { _method: post|delete }

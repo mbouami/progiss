@@ -3,6 +3,7 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Adresseslivraisonsfacturations
@@ -59,8 +60,15 @@ class Adresseslivraisonsfacturations
      */
     public function __construct()
     {
-        $this->typesadresse = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->typesadresse = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();        
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s<br>%s<br>%s',$this->getIntitule(),  $this->getAdresse(),  $this->getVille());
+    }      
 
     /**
      * Get id

@@ -19,7 +19,7 @@ class DevisControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'acme_prosalesbundle_devis[field_name]'  => 'Test',
+            'acme_prosalesbundle_devistype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -32,8 +32,8 @@ class DevisControllerTest extends WebTestCase
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
-        $form = $crawler->selectButton('Update')->form(array(
-            'acme_prosalesbundle_devis[field_name]'  => 'Foo',
+        $form = $crawler->selectButton('Edit')->form(array(
+            'acme_prosalesbundle_devistype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

@@ -10,13 +10,9 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Username</th>
-                <th>Salt</th>
-                <th>Password</th>
                 <th>Email</th>
                 <th>Fixe</th>
                 <th>Mobile</th>
-                <th>Signature</th>
-                <th>Signatureweb</th>
                 <th>Isactive</th>
                 <th>Createdat</th>
                 <th>Updatedat</th>
@@ -31,13 +27,9 @@
                 <td>{{ entity.nom }}</td>
                 <td>{{ entity.prenom }}</td>
                 <td>{{ entity.username }}</td>
-                <td>{{ entity.salt }}</td>
-                <td>{{ entity.password }}</td>
                 <td>{{ entity.email }}</td>
                 <td>{{ entity.fixe }}</td>
                 <td>{{ entity.mobile }}</td>
-                <td>{{ entity.signature }}</td>
-                <td>{{ entity.signatureweb }}</td>
                 <td>{{ entity.isActive }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>

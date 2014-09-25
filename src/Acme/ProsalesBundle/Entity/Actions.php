@@ -3,6 +3,7 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Actions
@@ -23,11 +24,6 @@ class Actions
      * @var string
      */
     private $a;
-
-    /**
-     * @var string
-     */
-    private $cc;
 
     /**
      * @var string
@@ -134,29 +130,6 @@ class Actions
     public function getA()
     {
         return $this->a;
-    }
-
-    /**
-     * Set cc
-     *
-     * @param string $cc
-     * @return Actions
-     */
-    public function setCc($cc)
-    {
-        $this->cc = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Get cc
-     *
-     * @return string 
-     */
-    public function getCc()
-    {
-        return $this->cc;
     }
 
     /**
@@ -367,19 +340,6 @@ class Actions
     }
 
     /**
-     * Set piecejointe
-     *
-     * @param \Acme\ProsalesBundle\Entity\Piecesjointes $piecejointe
-     * @return Actions
-     */
-    public function setPiecejointe(\Acme\ProsalesBundle\Entity\Piecesjointes $piecejointe = null)
-    {
-        $this->piecejointe = $piecejointe;
-
-        return $this;
-    }
-
-    /**
      * Get piecejointe
      *
      * @return \Acme\ProsalesBundle\Entity\Piecesjointes 
@@ -387,5 +347,49 @@ class Actions
     public function getPiecejointe()
     {
         return $this->piecejointe;
+    }
+    
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();        
+    }    
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getSujet());
+    } 
+    
+    public function getArrayActions(){
+    	$sortie = array('id'=>$this->getId(),     
+                        'sujet'=>$this->getSujet(),                        
+                        'createdAt' =>  date_format($this->getCreatedAt(), "d-m-Y à H:i"),
+                        'contact'=>$this->getContact()?$this->getContact()->__toString():null,
+                        'cat'=>'action'    				
+                        );
+    	return $sortie;
+    }       
+
+    /**
+     * Add piecejointe
+     *
+     * @param \Acme\ProsalesBundle\Entity\Piecesjointes $piecejointe
+     * @return Actions
+     */
+    public function addPiecejointe(\Acme\ProsalesBundle\Entity\Piecesjointes $piecejointe)
+    {
+        $this->piecejointe[] = $piecejointe;
+
+        return $this;
+    }
+
+    /**
+     * Remove piecejointe
+     *
+     * @param \Acme\ProsalesBundle\Entity\Piecesjointes $piecejointe
+     */
+    public function removePiecejointe(\Acme\ProsalesBundle\Entity\Piecesjointes $piecejointe)
+    {
+        $this->piecejointe->removeElement($piecejointe);
     }
 }

@@ -52,4 +52,9 @@ class Modesreglement
     {
         return $this->type;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getType());
+    }          
 }

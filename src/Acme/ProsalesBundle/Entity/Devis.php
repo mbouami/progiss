@@ -3,6 +3,7 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Devis
@@ -25,27 +26,22 @@ class Devis
     private $reference;
 
     /**
-     * @var string
+     * @var float
      */
     private $totalht;
 
     /**
-     * @var string
-     */
-    private $tauxtva;
-
-    /**
-     * @var string
+     * @var float
      */
     private $totaltva;
 
     /**
-     * @var string
+     * @var float
      */
     private $totalttc;
 
     /**
-     * @var string
+     * @var float
      */
     private $fraisport;
 
@@ -115,6 +111,11 @@ class Devis
     private $referent;
 
     /**
+     * @var float
+     */
+    private $tauxtva;
+
+    /**
      * @var \Acme\ProsalesBundle\Entity\Organisations
      */
     private $organisation;
@@ -129,8 +130,15 @@ class Devis
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->lignesdevis = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->lignesdevis = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->classement = false;
+        $this->priorite = false;
+        $this->envoimail = false; 
+        $this->raisonclassement = null;
+        $this->reference = ' ';             
     }
 
     /**
@@ -192,7 +200,7 @@ class Devis
     /**
      * Set totalht
      *
-     * @param string $totalht
+     * @param float $totalht
      * @return Devis
      */
     public function setTotalht($totalht)
@@ -205,7 +213,7 @@ class Devis
     /**
      * Get totalht
      *
-     * @return string 
+     * @return float 
      */
     public function getTotalht()
     {
@@ -213,32 +221,9 @@ class Devis
     }
 
     /**
-     * Set tauxtva
-     *
-     * @param string $tauxtva
-     * @return Devis
-     */
-    public function setTauxtva($tauxtva)
-    {
-        $this->tauxtva = $tauxtva;
-
-        return $this;
-    }
-
-    /**
-     * Get tauxtva
-     *
-     * @return string 
-     */
-    public function getTauxtva()
-    {
-        return $this->tauxtva;
-    }
-
-    /**
      * Set totaltva
      *
-     * @param string $totaltva
+     * @param float $totaltva
      * @return Devis
      */
     public function setTotaltva($totaltva)
@@ -251,7 +236,7 @@ class Devis
     /**
      * Get totaltva
      *
-     * @return string 
+     * @return float 
      */
     public function getTotaltva()
     {
@@ -261,7 +246,7 @@ class Devis
     /**
      * Set totalttc
      *
-     * @param string $totalttc
+     * @param float $totalttc
      * @return Devis
      */
     public function setTotalttc($totalttc)
@@ -274,7 +259,7 @@ class Devis
     /**
      * Get totalttc
      *
-     * @return string 
+     * @return float 
      */
     public function getTotalttc()
     {
@@ -284,7 +269,7 @@ class Devis
     /**
      * Set fraisport
      *
-     * @param string $fraisport
+     * @param float $fraisport
      * @return Devis
      */
     public function setFraisport($fraisport)
@@ -297,7 +282,7 @@ class Devis
     /**
      * Get fraisport
      *
-     * @return string 
+     * @return float 
      */
     public function getFraisport()
     {
@@ -624,6 +609,30 @@ class Devis
     }
 
     /**
+     * Set tauxtva
+     *
+     * @param float $tauxtva
+     * @return Devis
+     */
+
+    public function setTauxtva($tauxtva)
+    {
+        $this->tauxtva = $tauxtva;
+
+        return $this;
+    }
+    
+    /**
+     * Get tauxtva
+     *
+     * @return float
+     */
+    public function getTauxtva()
+    {
+        return $this->tauxtva;
+    }
+
+    /**
      * Set organisation
      *
      * @param \Acme\ProsalesBundle\Entity\Organisations $organisation
@@ -668,4 +677,60 @@ class Devis
     {
         return $this->contact;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s (%s)',$this->getDossier(),$this->getReference());
+    }    
+    
+    public function getArrayDevis(){
+    	$sortie = array(
+                        'id'=>$this->getId(),
+                        'reference'=>$this->getReference(),
+                        'dossier'=>$this->getDossier(),
+                        'createdAt' =>  date_format($this->getCreatedAt(), "d-m-Y"),
+                        'organisation' => $this->getOrganisation()->__toString(),            
+                        'contact'=>$this->getContact()?$this->getContact()->__toString():null,
+                        'referent'=>$this->getReferent()->__toString(),  
+                        'totalht' => $this->getTotalht(), 
+                        'totaltva' => $this->getTotaltva(),   
+//                        'tauxtva' => $this->getTauxtva()->getTaux(), 
+                        'tauxtva' => $this->getTauxtva(),             
+                        'fraisport' => $this->getFraisport(),             
+                        'totalttc' => $this->getTotalttc(), 
+                        'iddevisparent' => $this->getParent()!=null?$this->getParent()->getId():null, 
+                        'devisparent'=> $this->getParent()==null?null:$this->getParent()->getReference(),            
+                        'listeproduits'=> $this->getListeproduits(),
+                        'cat'=>'devis'    				
+                        );
+    	return $sortie;
+    }  
+    
+    public function getListeproduits(){
+    	$listeproduits = array();
+//    	if (count($this->getLignesdevis())>0) {
+//        	$produits = $this->getLignesdevis()->getValues();      
+        	foreach ($this->lignesdevis as $key => $produit) {
+        		$listeproduits[] = $produit->getArrayLigneDevis();
+        	}    	    
+//    	}
+
+    	return $listeproduits;
+    }    
+    
+    private $produitsdevis;
+    
+    public function getProduitsdevis()
+    {
+        return $this->produitsdevis;
+    }
+    
+    public function getParentOriginedevis()
+    {
+        $devisparent = $this;
+        while (null !== $devisparent->getParent()) {
+            $devisparent = $devisparent->getParent();
+        }
+        return $devisparent;
+    }    
 }

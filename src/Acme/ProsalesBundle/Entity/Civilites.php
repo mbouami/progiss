@@ -108,4 +108,9 @@ class Civilites
     {
         return $this->libellepolitesse;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getLibellecourt());
+    }     
 }

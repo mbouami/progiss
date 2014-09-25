@@ -15,11 +15,7 @@ Acme\ProsalesBundle\Entity\Actions:
     a:
       type: string
       length: 100
-      nullable: true          
-    cc:
-      type: string
-      length: 100
-      nullable: true             
+      nullable: true           
     cci:
       type: string
       length: 100     
@@ -53,10 +49,15 @@ Acme\ProsalesBundle\Entity\Actions:
         referencedColumnName: id  
     contact:
       targetEntity: Contacts  
+#    piecejointe:
+#      targetEntity: Piecesjointes  
+#      inversedBy: action
+#      joinColumn:
+#        name: piecejoints_id
+#        referencedColumnName: id
+  oneToMany:
     piecejointe:
-      targetEntity: Piecesjointes  
-      inversedBy: action
-      joinColumn:
-        name: piecejoints_id
-        referencedColumnName: id
+      targetEntity:  Piecesjointes
+      mappedBy: action  
+      cascade: [ "persist", "remove"]      
   lifecycleCallbacks: {  }        

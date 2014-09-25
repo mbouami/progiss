@@ -5,6 +5,9 @@ namespace Acme\ProsalesBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use Acme\ProsalesBundle\Entity\Referents;
 use Acme\ProsalesBundle\Form\ReferentsType;
 
@@ -15,6 +18,30 @@ use Acme\ProsalesBundle\Form\ReferentsType;
 class ReferentsController extends Controller
 {
 
+    private function setSecurePassword($entity) {
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($entity);      
+        $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+        $entity->setPassword($password);   
+    }    
+    
+    public function getSignaturesAction($id)
+    {
+        $lessignatures = array();
+        $em = $this->getDoctrine()->getManager();        
+        $referent = $em->getRepository('AcmeProsalesBundle:Referents')->find($id);
+        if (!$referent) {
+            throw $this->createNotFoundException('Unable to find Devis entity.');
+        }        
+
+        $lessignatures = array(
+                                "signature"=>$referent->getSignature()?utf8_encode(stream_get_contents($referent->getSignature())):null,
+                                "signatureweb"=>$referent->getSignatureWeb()?utf8_encode(stream_get_contents($referent->getSignatureWeb())):null
+                        );
+        $response = new JsonResponse();
+        $response->setData($lessignatures);
+        return $response;        
+    }      
     /**
      * Lists all Referents entities.
      *
@@ -36,38 +63,50 @@ class ReferentsController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Referents();
-        $form = $this->createCreateForm($entity);
+        $niveau = $request->get("niveau");             
+        $sortie = array("erreur"=>true,
+                        "action" => "new",
+                        "type"=>"referent",
+                        "typezone" => "onglet",
+                        "message"=>"Le Référent n'a pas été enregistré");        
+        $form = $this->createCreateForm($entity,$niveau);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $this->setSecurePassword($entity);
             $em->persist($entity);
             $em->flush();
+            $sortie["erreur"] = false;
+            $sortie["message"] = "Le Référent a été enregistré avec succès";  
+            $sortie["idonglet"] = "new_referent";              
 
-            return $this->redirect($this->generateUrl('referents_show', array('id' => $entity->getId())));
+//            return $this->redirect($this->generateUrl('referents_show', array('id' => $entity->getId())));
         }
-
-        return $this->render('AcmeProsalesBundle:Referents:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $response = new JsonResponse();
+        $response->setData($sortie);
+        return $response;
+//        return $this->render('AcmeProsalesBundle:Referents:new.html.twig', array(
+//            'entity' => $entity,
+//            'form'   => $form->createView(),
+//        ));
     }
 
     /**
-     * Creates a form to create a Referents entity.
-     *
-     * @param Referents $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Referents $entity)
+    * Creates a form to create a Referents entity.
+    *
+    * @param Referents $entity The entity
+    *
+    * @return \Symfony\Component\Form\Form The form
+    */
+    private function createCreateForm(Referents $entity,$niveau)
     {
-        $form = $this->createForm(new ReferentsType(), $entity, array(
+        $form = $this->createForm(new ReferentsType($niveau), $entity, array(
             'action' => $this->generateUrl('referents_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Enregistrer'));
 
         return $form;
     }
@@ -79,10 +118,13 @@ class ReferentsController extends Controller
     public function newAction()
     {
         $entity = new Referents();
-        $form   = $this->createCreateForm($entity);
+        $request = $this->getRequest();        
+        $niveau = $request->get("niveau");          
+        $form   = $this->createCreateForm($entity,$niveau);
 
         return $this->render('AcmeProsalesBundle:Referents:new.html.twig', array(
             'entity' => $entity,
+            'niveau' =>$niveau,
             'form'   => $form->createView(),
         ));
     }
@@ -102,11 +144,11 @@ class ReferentsController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('AcmeProsalesBundle:Referents:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            'signature' => stream_get_contents($entity->getSignature()),
+            'signatureweb' => stream_get_contents($entity->getSignatureweb()),            
+            'delete_form' => $deleteForm->createView(),        ));
     }
 
     /**
@@ -116,18 +158,22 @@ class ReferentsController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $request = $this->getRequest();        
+        $niveau = $request->get("niveau");
         $entity = $em->getRepository('AcmeProsalesBundle:Referents')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Referents entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($entity,$niveau);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AcmeProsalesBundle:Referents:edit.html.twig', array(
             'entity'      => $entity,
+            'niveau' =>$niveau,            
+            'signature' => $entity->getSignature()?stream_get_contents($entity->getSignature()):null,
+            'signatureweb' => $entity->getSignatureweb()?stream_get_contents($entity->getSignatureweb()):null,             
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -140,14 +186,14 @@ class ReferentsController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Referents $entity)
+    private function createEditForm(Referents $entity,$niveau)
     {
-        $form = $this->createForm(new ReferentsType(), $entity, array(
+        $form = $this->createForm(new ReferentsType($niveau), $entity, array(
             'action' => $this->generateUrl('referents_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
 
         return $form;
     }
@@ -157,29 +203,43 @@ class ReferentsController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->getDoctrine()->getManager();        
+        $sortie = array("erreur"=>true,
+                        "action" => "update",
+                        "type"=>"referent",
+                        "typezone" => "onglet",                
+                        "message"=>"Le référent n'a pas été mis à jours");
         $entity = $em->getRepository('AcmeProsalesBundle:Referents')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Referents entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+//        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
+        $current_pass = $entity->getPassword();          
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($current_pass != $entity->getPassword()) {
+                $entity->setSalt(md5(uniqid(null, true)));            
+                $this->setSecurePassword($entity);
+            }    
+//            $entity->upload();            
             $em->flush();
-
-            return $this->redirect($this->generateUrl('referents_edit', array('id' => $id)));
+            $sortie["erreur"] = false;
+            $sortie["message"] = "Le référent a été mis à jours avec succès";  
+            $sortie["idonglet"] = "update_referent_".$entity->getId();                        
+//            return $this->redirect($this->generateUrl('referents_edit', array('id' => $id)));
         }
-
-        return $this->render('AcmeProsalesBundle:Referents:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $response = new JsonResponse();
+        $response->setData($sortie);
+        return $response;
+//        return $this->render('AcmeProsalesBundle:Referents:edit.html.twig', array(
+//            'entity'      => $entity,
+//            'edit_form'   => $editForm->createView(),
+//            'delete_form' => $deleteForm->createView(),
+//        ));
     }
     /**
      * Deletes a Referents entity.
@@ -217,7 +277,7 @@ class ReferentsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('referents_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Supprimer'))
             ->getForm()
         ;
     }

@@ -3,6 +3,7 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Contacts
@@ -104,7 +105,10 @@ class Contacts
      */
     public function __construct()
     {
-        $this->centresinteret = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->centresinteret = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();       
+        $this->connectedAt = new \DateTime();         
     }
 
     /**
@@ -517,4 +521,32 @@ class Contacts
     {
         return $this->centresinteret;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s %s %s',$this->getCivilite(), $this->getNom(),$this->getPrenom());
+    }         
+    
+    public function getArrayContacts(){
+        $sortie = array('id'=>$this->id,
+                        'nom'=>$this->__toString(),
+                        'name'=>$this->__toString(),            
+                        'tel'=>$this->getFixe(),
+                        'mobile'=>$this->getMobile(),
+                        'email'=>$this->getEmail(),
+                        'centresinteret'=>$this->getListecentresinteret());
+        return $sortie;
+    }
+    
+    public function getListecentresinteret(){
+    	$listecentresinteret = array();
+        if (count($this->getCentresinteret())>0) {
+            $centresinterets = $this->getCentresinteret()->getValues();
+            foreach ($centresinterets as $key => $centreinteret) {
+                    $listecentresinteret[] = $centreinteret->getNom();
+            }              
+        }
+ 
+    	return $listecentresinteret;
+    }     
 }

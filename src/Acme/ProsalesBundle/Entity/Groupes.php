@@ -3,11 +3,13 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * Groupes
  */
-class Groupes
+class Groupes implements RoleInterface
 {
     /**
      * @var integer
@@ -24,18 +26,6 @@ class Groupes
      */
     private $role;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $referents;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->referents = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -91,6 +81,23 @@ class Groupes
     public function getRole()
     {
         return $this->role;
+    }
+    
+    public function __toString()
+    {
+        return sprintf('%s (%s)',$this->getNom(),  $this->getRole());
+    }      
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $referents;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->referents = new ArrayCollection();
     }
 
     /**

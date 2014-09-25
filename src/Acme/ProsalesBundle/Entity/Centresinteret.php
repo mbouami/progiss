@@ -97,4 +97,9 @@ class Centresinteret
     {
         return $this->contact;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getNom());
+    }      
 }

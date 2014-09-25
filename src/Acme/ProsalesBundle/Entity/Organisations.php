@@ -3,6 +3,7 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Organisations
@@ -75,11 +76,6 @@ class Organisations
     private $commande;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $action;
-
-    /**
      * @var \Acme\ProsalesBundle\Entity\Villes
      */
     private $ville;
@@ -92,29 +88,20 @@ class Organisations
     /**
      * @var \Acme\ProsalesBundle\Entity\Statuts
      */
-    private $statut;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $organisationsliees;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $organisationliee;
+    private $statut;    
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->contact = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->devis = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->commande = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->action = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->organisationsliees = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->organisationliee = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->contact = new ArrayCollection();
+        $this->devis = new ArrayCollection();
+        $this->commande = new ArrayCollection();
+        $this->organisationliee = new ArrayCollection();
+        $this->organisationsliees = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();          
     }
 
     /**
@@ -434,39 +421,6 @@ class Organisations
     }
 
     /**
-     * Add action
-     *
-     * @param \Acme\ProsalesBundle\Entity\Actions $action
-     * @return Organisations
-     */
-    public function addAction(\Acme\ProsalesBundle\Entity\Actions $action)
-    {
-        $this->action[] = $action;
-
-        return $this;
-    }
-
-    /**
-     * Remove action
-     *
-     * @param \Acme\ProsalesBundle\Entity\Actions $action
-     */
-    public function removeAction(\Acme\ProsalesBundle\Entity\Actions $action)
-    {
-        $this->action->removeElement($action);
-    }
-
-    /**
-     * Get action
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
      * Set ville
      *
      * @param \Acme\ProsalesBundle\Entity\Villes $ville
@@ -534,6 +488,89 @@ class Organisations
     {
         return $this->statut;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getNom());
+    }     
+    
+    public function getListecontacts(){
+    	 
+    	$listecontacts = array();
+    	$contacts = $this->getContact();
+    	if (count($contacts)>0){
+        	foreach ($contacts as $key => $contact) {
+        		$listecontacts[] = $contact->getArrayContacts();
+        	}    	    
+    	}    	
+
+    	return $listecontacts;
+    } 
+    public function getListedevis(){
+    
+    	$listedevis = array();
+        $sortie = array();
+    	$lesdevis = $this->getDevis();
+    	if (count($lesdevis)>0){
+        	foreach ($lesdevis as $key => $devis) {
+        		$listedevis[$devis->getDossier()][] = $devis->getArrayDevis();
+        	}    
+                foreach ($listedevis as $key => $value) {
+                    $sortie[] = array('id'=>$key,"reference"=>$key,'cat'=>'dossier',"children"=>$value);
+                }                
+    	}
+//    	return array('identifier'=> 'id','items'=>$sortie);
+    	return $sortie;        
+    }      
+    
+    public function getListecommandes(){
+    
+    	$listecommandes = array();
+    	$lescommandes = $this->getCommande();
+    	if (count($lescommandes)>0){
+        	foreach ($lescommandes as $key => $commande) {
+        		$listecommandes[] = $commande->getArrayCommandes();
+        	}    	    
+    	}
+    	return $listecommandes;
+    }        
+
+    public function getListeactions(){
+    
+    	$listeactions = array();
+    	$lesactions = $this->getAction();
+    	if (count($lesactions)>0){
+        	foreach ($lesactions as $key => $action) {
+        		$listeactions[] = $action->getArrayActions();
+        	}    	    
+    	}
+    	return $listeactions;
+    }      
+    /**
+     * @ORM\PostUpdate
+     */
+    public function doStuffOnPostUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function doStuffOnPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $organisationsliees;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $organisationliee;
+
 
     /**
      * Add organisationsliees
@@ -601,18 +638,41 @@ class Organisations
         return $this->organisationliee;
     }
     /**
-     * @ORM\PostUpdate
+     * @var \Doctrine\Common\Collections\Collection
      */
-    public function doStuffOnPostUpdate()
+    private $action;
+
+
+    /**
+     * Add action
+     *
+     * @param \Acme\ProsalesBundle\Entity\Actions $action
+     * @return Organisations
+     */
+    public function addAction(\Acme\ProsalesBundle\Entity\Actions $action)
     {
-        // Add your code here
+        $this->action[] = $action;
+
+        return $this;
     }
 
     /**
-     * @ORM\PreUpdate
+     * Remove action
+     *
+     * @param \Acme\ProsalesBundle\Entity\Actions $action
      */
-    public function doStuffOnPreUpdate()
+    public function removeAction(\Acme\ProsalesBundle\Entity\Actions $action)
     {
-        // Add your code here
+        $this->action->removeElement($action);
+    }
+
+    /**
+     * Get action
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 }

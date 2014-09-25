@@ -19,18 +19,6 @@ class Pays
      */
     private $nom;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $villes;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->villes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -63,6 +51,23 @@ class Pays
     public function getNom()
     {
         return $this->nom;
+    }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getNom());
+    }     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $villes;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->villes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

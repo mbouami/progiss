@@ -8,12 +8,13 @@ Acme\ProsalesBundle\Entity\Villes:
       type: integer
       generator:
         strategy: AUTO        
-    ville:
+    nom:
       type: string
       length: 100  
     cp:
       type: string
       length: 10      
+  manyToOne:
     pays:
-      type: string
-      length: 100
+      targetEntity:  Pays 
+      inversedBy: villes

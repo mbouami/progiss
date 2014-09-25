@@ -25,7 +25,7 @@ class Lignescommandes
     private $reference;
 
     /**
-     * @var string
+     * @var float
      */
     private $prixht;
 
@@ -35,12 +35,12 @@ class Lignescommandes
     private $quantite;
 
     /**
-     * @var string
+     * @var float
      */
     private $remise;
 
     /**
-     * @var string
+     * @var float
      */
     private $totalht;
 
@@ -114,7 +114,7 @@ class Lignescommandes
     /**
      * Set prixht
      *
-     * @param string $prixht
+     * @param float $prixht
      * @return Lignescommandes
      */
     public function setPrixht($prixht)
@@ -127,7 +127,7 @@ class Lignescommandes
     /**
      * Get prixht
      *
-     * @return string 
+     * @return float 
      */
     public function getPrixht()
     {
@@ -160,7 +160,7 @@ class Lignescommandes
     /**
      * Set remise
      *
-     * @param string $remise
+     * @param float $remise
      * @return Lignescommandes
      */
     public function setRemise($remise)
@@ -173,7 +173,7 @@ class Lignescommandes
     /**
      * Get remise
      *
-     * @return string 
+     * @return float 
      */
     public function getRemise()
     {
@@ -183,7 +183,7 @@ class Lignescommandes
     /**
      * Set totalht
      *
-     * @param string $totalht
+     * @param float $totalht
      * @return Lignescommandes
      */
     public function setTotalht($totalht)
@@ -196,7 +196,7 @@ class Lignescommandes
     /**
      * Get totalht
      *
-     * @return string 
+     * @return float 
      */
     public function getTotalht()
     {

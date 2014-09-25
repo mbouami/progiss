@@ -3,6 +3,8 @@
 namespace Acme\ProsalesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Acme\ProsalesBundle\Entity\Lignescommandes;
 
 /**
  * Commandes
@@ -30,27 +32,22 @@ class Commandes
     private $referenceclient;
 
     /**
-     * @var string
+     * @var float
      */
     private $totalht;
 
     /**
-     * @var string
-     */
-    private $tauxtva;
-
-    /**
-     * @var string
+     * @var float
      */
     private $totaltva;
 
     /**
-     * @var string
+     * @var float
      */
     private $totalttc;
 
     /**
-     * @var string
+     * @var float
      */
     private $fraisport;
 
@@ -105,6 +102,11 @@ class Commandes
     private $referent;
 
     /**
+     * @var float
+     */
+    private $tauxtva;
+
+    /**
      * @var \Acme\ProsalesBundle\Entity\Organisations
      */
     private $organisation;
@@ -119,7 +121,9 @@ class Commandes
      */
     public function __construct()
     {
-        $this->lignescommandes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lignescommandes = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();         
     }
 
     /**
@@ -204,7 +208,7 @@ class Commandes
     /**
      * Set totalht
      *
-     * @param string $totalht
+     * @param float $totalht
      * @return Commandes
      */
     public function setTotalht($totalht)
@@ -217,7 +221,7 @@ class Commandes
     /**
      * Get totalht
      *
-     * @return string 
+     * @return float 
      */
     public function getTotalht()
     {
@@ -225,32 +229,9 @@ class Commandes
     }
 
     /**
-     * Set tauxtva
-     *
-     * @param string $tauxtva
-     * @return Commandes
-     */
-    public function setTauxtva($tauxtva)
-    {
-        $this->tauxtva = $tauxtva;
-
-        return $this;
-    }
-
-    /**
-     * Get tauxtva
-     *
-     * @return string 
-     */
-    public function getTauxtva()
-    {
-        return $this->tauxtva;
-    }
-
-    /**
      * Set totaltva
      *
-     * @param string $totaltva
+     * @param float $totaltva
      * @return Commandes
      */
     public function setTotaltva($totaltva)
@@ -263,7 +244,7 @@ class Commandes
     /**
      * Get totaltva
      *
-     * @return string 
+     * @return float 
      */
     public function getTotaltva()
     {
@@ -273,7 +254,7 @@ class Commandes
     /**
      * Set totalttc
      *
-     * @param string $totalttc
+     * @param float $totalttc
      * @return Commandes
      */
     public function setTotalttc($totalttc)
@@ -286,7 +267,7 @@ class Commandes
     /**
      * Get totalttc
      *
-     * @return string 
+     * @return float 
      */
     public function getTotalttc()
     {
@@ -296,7 +277,7 @@ class Commandes
     /**
      * Set fraisport
      *
-     * @param string $fraisport
+     * @param float $fraisport
      * @return Commandes
      */
     public function setFraisport($fraisport)
@@ -309,7 +290,7 @@ class Commandes
     /**
      * Get fraisport
      *
-     * @return string 
+     * @return float 
      */
     public function getFraisport()
     {
@@ -557,6 +538,29 @@ class Commandes
     }
 
     /**
+     * Set tauxtva
+     *
+     * @param float $tauxtva
+     * @return Commandes
+     */
+    public function setTauxtva($tauxtva = null)
+    {
+        $this->tauxtva = $tauxtva;
+
+        return $this;
+    }
+
+    /**
+     * Get tauxtva
+     *
+     * @return float
+     */
+    public function getTauxtva()
+    {
+        return $this->tauxtva;
+    }
+
+    /**
      * Set organisation
      *
      * @param \Acme\ProsalesBundle\Entity\Organisations $organisation
@@ -601,4 +605,42 @@ class Commandes
     {
         return $this->contact;
     }
+ 
+    public function getListeproduits(){
+    	$listeproduits = array();   
+        	foreach ($this->lignescommandes as $key => $produit) {
+                    $listeproduits[] = array(
+                                            'id'=>$key,
+//                                            'idcommande'=>  $produit->getId(),                        
+                                            'ordre'=> $produit->getOrdre(),
+                                            'prixht'=> $produit->getPrixht(),
+                                            'totalht'=> $produit->getTotalht(),
+                                            'quantite'=> $produit->getQuantite(),
+                                            'reference'=>  $produit->getReference(),
+                                            'remise'=>  $produit->getRemise(),
+                                            'description'=>  $produit->getDescription(),
+                                            'cat'=>'produit'
+                                            );
+        	}    	    
+    	return $listeproduits;
+    } 
+    
+    public function getArrayCommandes(){
+    	$sortie = array('id'=>$this->getId(),
+    				'numcommande'=>$this->getNumcommande(),
+                                'referenceclient' => $this->getReferenceclient(),
+    				'dossier'=>$this->getDossier(),
+                                'totalht' => $this->getTotalht(), 
+                                'totaltva' => $this->getTotaltva(),   
+                                'tauxtva' => $this->getTauxtva(),             
+                                'fraisport' => $this->getFraisport(),             
+                                'totalttc' => $this->getTotalttc(),             
+    				'createdAt' =>  date_format($this->getCreatedAt(), "d-m-Y"),
+    				'contact'=>$this->getContact()?$this->getContact()->__toString():null,
+                                'referent'=>$this->getReferent()->__toString(),             
+    				'listeproduits'=> $this->getListeproduits(),
+    				'cat'=>'commande'    				
+				);
+    	return $sortie;
+    }          
 }

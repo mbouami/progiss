@@ -52,4 +52,9 @@ class Typesdevis
     {
         return $this->nom;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getNom());
+    }          
 }

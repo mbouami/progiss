@@ -15,7 +15,7 @@ class Tauxtva
     private $id;
 
     /**
-     * @var string
+     * @var decimal
      */
     private $taux;
 
@@ -33,7 +33,7 @@ class Tauxtva
     /**
      * Set taux
      *
-     * @param string $taux
+     * @param float $taux
      * @return Tauxtva
      */
     public function setTaux($taux)
@@ -46,10 +46,15 @@ class Tauxtva
     /**
      * Get taux
      *
-     * @return string 
+     * @return float 
      */
     public function getTaux()
     {
         return $this->taux;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getTaux());
+    }     
 }

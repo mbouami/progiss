@@ -1,28 +1,153 @@
 #acme_prosales_homepage:
-#    path:     /hello/{name}
-#    defaults: { _controller: AcmeProsalesBundle:Default:index }
-
-_welcome_progiss:
+#    pattern:  /hello/{name}
+#    defaults: { _controller: AcmeProsalesBundle:Default:index } 
+_welcome_prosales:
     pattern:  /
-    defaults: "{ _controller: AcmeProsalesBundle:Default:index }"
+    defaults: { _controller: AcmeProsalesBundle:Default:index }
     
 _prosales_secured:
     resource: "@AcmeProsalesBundle/Controller/SecuredController.php"
     type:     annotation
-
+    
 AcmeProsalesBundle_referents:
     resource: "@AcmeProsalesBundle/Resources/config/routing/referents.yml"
-    prefix:   /referents
+    prefix:   /referents   
     
-AcmeProsalesBundle_villes:
-    resource: "@AcmeProsalesBundle/Resources/config/routing/villes.yml"
-    prefix:   /villes
-
+AcmeProsalesBundle_organisations:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/organisations.yml"
+    prefix:   /organisations
+    
+AcmeProsalesBundle_contacts:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/contacts.yml"
+    prefix:   /contacts    
+    
+AcmeProsalesBundle_groupes:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/groupes.yml"
+    prefix:   /groupes  
+    
 AcmeProsalesBundle_devis:
     resource: "@AcmeProsalesBundle/Resources/config/routing/devis.yml"
     prefix:   /devis    
     
+AcmeProsalesBundle_lignesdevis:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/lignesdevis.yml"
+    prefix:   /lignesdevis    
+    
 AcmeProsalesBundle_commandes:
     resource: "@AcmeProsalesBundle/Resources/config/routing/commandes.yml"
-    prefix:   /commandes
+    prefix:   /commandes    
+    
+AcmeProsalesBundle_modelescourriers:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/modelescourriers.yml"
+    prefix:   /modelescourriers
         
+AcmeProsalesBundle_actions:
+    resource: "@AcmeProsalesBundle/Resources/config/routing/actions.yml"
+    prefix:   /actions        
+    
+AcmeProsalesBundle_liste_organisations:
+    pattern:  /listeorganisations
+    defaults: { _controller: AcmeProsalesBundle:Organisations:listeorganisations }
+    
+AcmeProsalesBundle_liste_contacts:
+    pattern:  /listecontacts
+    defaults: { _controller: AcmeProsalesBundle:Organisations:listecontacts }    
+    
+AcmeProsalesBundle_detail_organisations:
+    pattern:  /detailorganisation
+    defaults: { _controller: AcmeProsalesBundle:Organisations:detailorganisation }    
+    
+AcmeProsalesBundle_liste_villes_par_pays:
+    pattern:  /listevilles
+    defaults: { _controller: AcmeProsalesBundle:Organisations:listevilles } 
+    
+AcmeProsalesBundle_liste_produits:
+    pattern:  /listeproduits
+    defaults: { _controller: "AcmeProsalesBundle:Devis:listeproduits" }
+    requirements: { _method: post|get}      
+    
+AcmeProsalesBundle_enregistrer_lignes_devis:
+    pattern:  /enregistrerlignesdevis
+    defaults: { _controller: "AcmeProsalesBundle:Devis:enregistrerlignesdevis" }
+    requirements: { _method: post|get}  
+    
+AcmeProsalesBundle_devis_en_cours:
+    pattern:  /devisencours
+    defaults: { _controller: "AcmeProsalesBundle:Devis:listedevisencours" }
+    requirements: { _method: post|get|put}     
+    
+AcmeProsalesBundle_signatures:
+    pattern:  /{id}/signatures
+    defaults: { _controller: "AcmeProsalesBundle:Referents:getSignatures" }
+    requirements: { _method: post|get|put}    
+    
+imprimer_devis:
+    pattern:  /{id}/imprimerdevis
+    defaults: { _controller: "AcmeProsalesBundle:Devis:imprimerdevis" }
+    requirements: { _method: post|get|put}  
+
+new_message:
+    pattern:  /{id}/newMessage
+    defaults: { _controller: "AcmeProsalesBundle:Devis:newMessage" }
+    requirements: { _method: post|get|put}   
+    
+envoyer_devis:
+    pattern:  /{id}/envoyerdevis
+    defaults: { _controller: "AcmeProsalesBundle:Devis:envoyerdevis" }
+    requirements: { _method: post|get|put} 
+    
+AcmeProsalesBundle_detail_modelecourrier:
+    pattern:  /detailmodele
+    defaults: { _controller: AcmeProsalesBundle:Modelescourriers:detailmodele }  
+    
+AcmeProsalesBundle_detail_devis:
+    pattern:  /detaildevis
+    defaults: { _controller: AcmeProsalesBundle:Devis:detaildevis }    
+    
+AcmeProsalesBundle_upload:
+    pattern:  /upload
+    defaults: { _controller: AcmeProsalesBundle:Devis:upload }   
+    
+AcmeProsalesBundle_effacer_fichier:
+    pattern:  /effacerfichier/{nomfichier}
+    defaults: { _controller: AcmeProsalesBundle:Devis:effacerfichier }  
+    
+AcmeProsalesBundle_contact_nommel:
+    pattern:  /{id}/editnommelcontact
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:editNomMel" }  
+    
+AcmeProsalesBundle_liste_tauxtva:
+    pattern:  /listetauxtva
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:listetauxtva" }  
+    
+AcmeProsalesBundle_liste_services:
+    pattern:  /listeservices
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:listeservices" }
+    
+AcmeProsalesBundle_afficher_tauxtva:
+    pattern:  /affichertauxtva
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:AfficherTaux" }  
+    
+AcmeProsalesBundle_tauxtva_delete:
+    pattern:  /{id}/deletetaux
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:deletetaux" }
+    requirements: { _method: post|delete } 
+
+AcmeProsalesBundle_tauxtva_new:
+    pattern:  /{tauxtva}/savetaux
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:savetaux" }
+    requirements: { _method: post }  
+    
+AcmeProsalesBundle_afficher_services:
+    pattern:  /afficherservices
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:AfficherServices" }  
+    
+AcmeProsalesBundle_service_delete:
+    pattern:  /{id}/deleteservice
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:deleteservice" }
+    requirements: { _method: post|delete } 
+
+AcmeProsalesBundle_service_new:
+    pattern:  /{nomservice}/saveservice
+    defaults: { _controller: "AcmeProsalesBundle:Parametres:saveservice" }
+    requirements: { _method: post }     

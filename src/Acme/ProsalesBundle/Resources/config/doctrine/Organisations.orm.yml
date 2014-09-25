@@ -84,4 +84,7 @@ Acme\ProsalesBundle\Entity\Organisations:
       targetEntity: Statuts      
   lifecycleCallbacks:
     postUpdate: [ doStuffOnPostUpdate ]     
-    preUpdate: [ doStuffOnPreUpdate ]
+    preUpdate: [ doStuffOnPreUpdate ]      
+#    postLoad: [ doStuffOnPostLoad ]      
+#    prePersist: [ doStuffOnPrePersist, doOtherStuffOnPrePersist ]
+#    postPersist: [ doStuffOnPostPersist ] 

@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class VillesRepository extends EntityRepository
 {
+    public function ListeVillesParPays($idpays)
+    {    
+        $query = $this
+            ->createQueryBuilder('u')           
+            ->where('u.pays=:idpays')
+            ->setParameter('idpays', $idpays)
+            ->orderBy('u.nom', 'ASC');
+        try {
+            return $query;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }         
+    }    
 }

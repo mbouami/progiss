@@ -17,7 +17,14 @@ class VillesType extends AbstractType
         $builder
             ->add('ville')
             ->add('cp')
-            ->add('pays')
+            ->add('pays','country', array(
+				    'empty_value' => 'Choisissez un pays',
+            		'required'    => true,
+                                         'attr'=> array(
+                                                        'data-dojo-type' =>'dijit/form/FilteringSelect',
+                                                        'data-dojo-props' =>"id:'villes_pays'", 
+                                                        'style'=>"width:200px;"                                           
+                                                    )) ) 
         ;
     }
     

@@ -108,4 +108,9 @@ class Modelescourriers
     {
         return $this->description;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s',$this->getLibelle());
+    }      
 }

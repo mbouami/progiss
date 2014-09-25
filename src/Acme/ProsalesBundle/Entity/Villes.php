@@ -17,7 +17,7 @@ class Villes
     /**
      * @var string
      */
-    private $ville;
+    private $nom;
 
     /**
      * @var string
@@ -25,7 +25,7 @@ class Villes
     private $cp;
 
     /**
-     * @var string
+     * @var \Acme\ProsalesBundle\Entity\Pays
      */
     private $pays;
 
@@ -41,26 +41,26 @@ class Villes
     }
 
     /**
-     * Set ville
+     * Set nom
      *
-     * @param string $ville
+     * @param string $nom
      * @return Villes
      */
-    public function setVille($ville)
+    public function setNom($nom)
     {
-        $this->ville = $ville;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get ville
+     * Get nom
      *
      * @return string 
      */
-    public function getVille()
+    public function getNom()
     {
-        return $this->ville;
+        return $this->nom;
     }
 
     /**
@@ -89,10 +89,10 @@ class Villes
     /**
      * Set pays
      *
-     * @param string $pays
+     * @param \Acme\ProsalesBundle\Entity\Pays $pays
      * @return Villes
      */
-    public function setPays($pays)
+    public function setPays(\Acme\ProsalesBundle\Entity\Pays $pays = null)
     {
         $this->pays = $pays;
 
@@ -102,10 +102,15 @@ class Villes
     /**
      * Get pays
      *
-     * @return string 
+     * @return \Acme\ProsalesBundle\Entity\Pays 
      */
     public function getPays()
     {
         return $this->pays;
     }
+    
+    public function __toString()
+    {
+        return sprintf('%s (%s-%s)',$this->getNom(),$this->getCp(),$this->getPays()->getNom());
+    }      
 }
