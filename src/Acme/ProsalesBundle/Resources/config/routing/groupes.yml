@@ -1,0 +1,30 @@
+groupes:
+    pattern:  /
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:index" }
+
+groupes_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:show" }
+
+groupes_new:
+    pattern:  /new
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:new" }
+
+groupes_create:
+    pattern:  /create
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:create" }
+    requirements: { _method: post }
+
+groupes_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:edit" }
+
+groupes_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:update" }
+    requirements: { _method: post|put }
+
+groupes_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Groupes:delete" }
+    requirements: { _method: post|delete }

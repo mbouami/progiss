@@ -1,0 +1,30 @@
+actions:
+    path:     /
+    defaults: { _controller: "AcmeProsalesBundle:Actions:index" }
+
+actions_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Actions:show" }
+
+actions_new:
+    path:     /new
+    defaults: { _controller: "AcmeProsalesBundle:Actions:new" }
+
+actions_create:
+    path:     /create
+    defaults: { _controller: "AcmeProsalesBundle:Actions:create" }
+    requirements: { _method: post }
+
+actions_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Actions:edit" }
+
+actions_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Actions:update" }
+    requirements: { _method: post|put }
+
+actions_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Actions:delete" }
+    requirements: { _method: post|delete }

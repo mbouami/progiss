@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}    
+    <table border='1'>
+        <tr>
+            <td>{{ form_widget(form.listetauxtva) }}</td>
+            <td>{{ form_label(form.nouveautaux) }}<br>{{ form_widget(form.nouveautaux) }}<br>{{ form_widget(form.save) }}</td>           
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center">{{ form_widget(form.delete) }}</td>             
+        </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {{ form_start(edit_form, {'attr': {'onsubmit':'return sendForm("POST",this);','enctype':'multipart/form-data'}}) }}
+        {{ form_errors(edit_form) }}  
+    <table border='0'>
+        <tr>
+            <td>{{ form_widget(edit_form.dossier) }}</td>
+            <td>{{ form_widget(edit_form.referent) }}</td>               
+            <td>{{ form_widget(edit_form.modereglement) }}</td>            
+        </tr>
+        <tr>
+            <td>{{ form_widget(edit_form.organisation) }}</td>
+            <td>{{ form_widget(edit_form.contact) }}</td>               
+            <td>{{ form_widget(edit_form.typedevis) }}</td>            
+        </tr> 
+        <tr>
+            <td  colspan="3" style="text-align: left">Quantité : {{ form_widget(edit_form.quantite) }}</td>          
+        </tr>              
+        <tr>
+            <td colspan="3" style="text-align: right">Total HT : {{ form_widget(edit_form.totalht) }}</td>            
+        </tr>    
+        <tr>
+            <td colspan="2" style="text-align: right">Taux TVA : {{ form_widget(edit_form.tauxtva) }}</td> 
+            <td style="text-align: right">Total TVA : {{ form_widget(edit_form.totaltva) }}</td>              
+        </tr>  
+        <tr>
+            <td colspan="3" style="text-align: right">Frais de Port : {{ form_widget(edit_form.fraisport) }}</td>            
+        </tr>      
+        <tr>
+            <td colspan="3" style="text-align: right;">Total TTC : {{ form_widget(edit_form.totalttc) }}</td>            
+        </tr>   
+        <tr>
+            <td colspan="3">{{ form_widget(edit_form.observation) }}</td>
+        </tr>         
+    </table>  
+        {{ form(edit_form) }}
+    {{ form_end(edit_form) }}   
+{% endblock %}

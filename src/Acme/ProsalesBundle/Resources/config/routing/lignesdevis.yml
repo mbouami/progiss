@@ -1,0 +1,30 @@
+lignesdevis:
+    pattern:  /
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:index" }
+
+lignesdevis_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:show" }
+
+lignesdevis_new:
+    pattern:  /new
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:new" }
+
+lignesdevis_create:
+    pattern:  /create
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:create" }
+    requirements: { _method: post }
+
+lignesdevis_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:edit" }
+
+lignesdevis_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:update" }
+    requirements: { _method: post|put }
+
+lignesdevis_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Lignesdevis:delete" }
+    requirements: { _method: post|delete }

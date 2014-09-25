@@ -1,0 +1,108 @@
+<html>
+    <head>
+    </head>
+    <body>  
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 40%">Devis</td>
+                <td style="width: 20%"></td>
+                <td rowspan="2" style="width: 40%">
+                        {{ entity.organisation }}<br>Tél : {{ entity.organisation.tel }}<br>{{ entity.organisation.adresse }}
+                        <br>{{ entity.organisation.ville.cp }} {{ entity.organisation.ville.nom }}({{ entity.organisation.ville.pays }})
+                        <br>A l'attention de {{ entity.contact }}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>    
+        </table>
+        <table style="width: 100%;">
+            <thead>
+            <th style="background-color: #00B0F0">Date</th>
+            <th style="background-color: #00B0F0">Référence</th> 
+            <th style="background-color: #00B0F0">Votre Correspondant</th>
+            <th style="background-color: #00B0F0">Page</th>         
+            </thead> 
+            <tr>
+                <td style="text-align: center">{{ entity.createdAt|date("d/m/Y") }}</td>
+                <td style="text-align: center">{{ entity.reference }}</td>    
+                <td style="text-align: center">{{ entity.referent }}</td>
+                <td style="text-align: center">[page]</td>          
+            </tr>
+        </table>
+        <br/><br />
+        <table style="width: 100%;border: 2px;">
+            <thead>
+            <th style="background-color: #00B0F0">N°</th>
+            <th style="background-color: #00B0F0">Référence</th> 
+            <th style="background-color: #00B0F0">Libellé</th>
+            <th style="background-color: #00B0F0">Qte</th>     
+            <th style="background-color: #00B0F0">Prix HT</th> 
+            <th style="background-color: #00B0F0">Remise</th>
+            <th style="background-color: #00B0F0">Total HT</th>       
+            </thead>   
+            {% for lignedevis in entity.lignesdevis %}
+            <tr>
+                <td style="text-align: center">{{ lignedevis.ordre|number_format }}</td>
+                <td style="text-align: center">{{ lignedevis.reference|e }}</td>  
+                <td style="text-align: left">{{ lignedevis.description| raw }}</td>
+                <td style="text-align: center">{{ lignedevis.quantite|number_format }}</td>   
+                <td style="text-align: center">{{ lignedevis.prixht|number_format(2, '.', ' ') }} &euro;</td>  
+                <td style="text-align: center">{{ lignedevis.remise|number_format(2, '.', ' ') }} %</td>
+                <td style="text-align: right">{{ lignedevis.totalht|number_format(2, '.', ' ') }} &euro;</td>         
+            </tr>
+            {% endfor %}  
+            <tr>
+                <td ></td>
+                <td ></td>  
+                <td ></td>
+                <td ></td>   
+                <td ></td> 
+                <td style="text-align: left">Frais de port </td>
+                <td style="text-align: right">{{ entity.fraisport|number_format(2, '.', ' ') }} &euro;</td> 
+            </tr>
+            <tr>
+                <td ></td>
+                <td ></td>  
+                <td ></td>
+                <td ></td>   
+                <td ></td> 
+                <td style="text-align: left">Total HT </td>
+                <td style="text-align: right">{{ entity.totalht|number_format(2, '.', ' ') }} &euro;</td> 
+            </tr>    
+            <tr>
+                <td ></td>
+                <td ></td>  
+                <td ></td>
+                <td ></td>   
+                <td ></td> 
+                <td style="text-align: left">TVA ({{ entity.tauxtva|number_format(2, '.', ' ') }} %) </td>
+                <td style="text-align: right">{{ entity.totaltva|number_format(2, '.', ' ') }} &euro;</td> 
+            </tr>   
+            <tr>
+                <td ></td>
+                <td ></td>  
+                <td ></td>
+                <td ></td>   
+                <td ></td> 
+                <td style="text-align: left">Total TTC </td>
+                <td style="text-align: right">{{ entity.totalttc|number_format(2, '.', ' ') }} &euro;</td> 
+            </tr>     
+        </table>
+
+        <table style="width: 100%;border: 2px;">
+            <tr>
+                <td colspan="2">Lien de paiement sécurisé : <a href="{{ paiement.valeur }}?email={{ entity.contact.email }}&montant={{ entity.totalttc|number_format(2, '.', '') }}&reference={{ entity.reference }}">{{ paiement.valeur }}?email={{ entity.contact.email }}&montant={{ entity.totalttc|number_format(2, '.', '') }}&reference={{ entity.reference }}</a></td>
+            </tr>
+            <tr>
+                <td>Validité de l'offre : 15 jours</td>
+                <td>Condition de règlement : {{ entity.modereglement }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Nos tarifs comprennent un service d'assistance téléphonique d'installation sur les logiciels proposées</td>
+            </tr>
+        </table>
+        {{ entity.referent }}       
+    </body>
+</html>

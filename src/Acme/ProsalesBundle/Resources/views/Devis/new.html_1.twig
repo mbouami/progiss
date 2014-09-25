@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%} 
+    {{ form_start(form, {'attr': {'onsubmit':'return sendForm("POST",this);','enctype':'multipart/form-data'}}) }}    
+        {{ form_errors(form) }}  
+    <table border='0'>
+        <tr>
+            <td>{{ form_widget(form.dossier) }}</td>
+            <td>{{ form_widget(form.referent) }}</td>               
+            <td>{{ form_widget(form.modereglement) }}</td>            
+        </tr>
+        <tr>
+            <td>{{ form_widget(form.organisation) }}</td>
+            <td>{{ form_widget(form.contact) }}</td>               
+            <td>{{ form_widget(form.typedevis) }}</td>            
+        </tr> 
+        <tr>
+            <td  colspan="3" style="text-align: left">Quantité : {{ form_widget(form.quantite) }}</td>          
+        </tr>       
+        <tr>
+            <td  style="text-align: left">{{ form_widget(form.produits) }}</td>     
+            <td  colspan="2" style="text-align: left">{{ form_widget(form.produitsdevis) }}</td>               
+        </tr>         
+{#        <tr>
+            <td style="text-align: left;position: inherit; bottom: 0px;vertical-align: top;">
+                <div data-dojo-type='GrilleProduits' data-dojo-props='
+                    id:"grilleproduits_"+niveau, 
+                    store: StoreProduits,
+                    modules: mods,
+                    niveau:niveau,
+                    structure: structure_produits'>
+                </div>                   
+            </td>
+            <td colspan="2" style="text-align: right;position: inherit; bottom: 0px;vertical-align: top;">
+                <div data-dojo-type='GrilleLignesDevis' data-dojo-props='
+                    id:"grillelignesdevis_"+niveau, 
+                    store: store_null,
+                    modules: mods,
+                    niveau:niveau,                    
+                    iddevis: {{ iddevis }},                    
+                    structure: structure_lignes_devis'>
+                </div>                
+            </td>            
+        </tr>      #}
+        <tr>
+            <td colspan="3" style="text-align: right">Total HT : {{ form_widget(form.totalht) }}</td>            
+        </tr>    
+        <tr>
+            <td colspan="2" style="text-align: right">Taux TVA : {{ form_widget(form.tauxtva) }}</td> 
+            <td style="text-align: right">Total TVA : {{ form_widget(form.totaltva) }}</td>              
+        </tr>  
+        <tr>
+            <td colspan="3" style="text-align: right">Frais de Port : {{ form_widget(form.fraisport) }}</td>            
+        </tr>      
+        <tr>
+            <td colspan="3" style="text-align: right">Total TTC : {{ form_widget(form.totalttc) }}</td>            
+        </tr>   
+        <tr>
+            <td colspan="3">{{ form_widget(form.observation) }}</td>
+        </tr>               
+    </table>  
+        {{ form(form) }}
+    {{ form_end(form) }}   
+{% endblock %}

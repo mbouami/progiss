@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {{ form_start(edit_form, {'attr': {'onsubmit':'return sendForm("POST",this,grilleorganisations);'}}) }} 
+        {{ form_errors(edit_form) }}  
+        {{ form(edit_form) }}
+    {{ form_end(edit_form) }}
+{#<progress min="0" max="100" value="0">0% complete</progress>    #}
+{% endblock %}

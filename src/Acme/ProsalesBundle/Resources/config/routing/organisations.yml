@@ -1,0 +1,30 @@
+organisations:
+    pattern:  /
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:index" }
+
+organisations_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:show" }
+
+organisations_new:
+    pattern:  /new
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:new" }
+
+organisations_create:
+    pattern:  /create
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:create" }
+    requirements: { _method: post }
+
+organisations_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:edit" }
+
+organisations_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:update" }
+    requirements: { _method: post|put }
+
+organisations_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Organisations:delete" }
+    requirements: { _method: post|delete }

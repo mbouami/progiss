@@ -1,0 +1,30 @@
+contacts:
+    pattern:  /
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:index" }
+
+contacts_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:show" }
+
+contacts_new:
+    pattern:  /new
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:new" }
+
+contacts_create:
+    pattern:  /create
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:create" }
+    requirements: { _method: post|get }
+
+contacts_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:edit" }
+
+contacts_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:update" }
+    requirements: { _method: post|put }
+
+contacts_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AcmeProsalesBundle:Contacts:delete" }
+    requirements: { _method: post|delete }

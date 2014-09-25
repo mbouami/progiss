@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Lignesdevis</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Ordre</th>
+                <td>{{ entity.ordre }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ entity.reference }}</td>
+            </tr>
+            <tr>
+                <th>Prixht</th>
+                <td>{{ entity.prixht }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ entity.quantite }}</td>
+            </tr>
+            <tr>
+                <th>Remise</th>
+                <td>{{ entity.remise }}</td>
+            </tr>
+            <tr>
+                <th>Totalht</th>
+                <td>{{ entity.totalht }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ entity.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('lignesdevis') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('lignesdevis_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
